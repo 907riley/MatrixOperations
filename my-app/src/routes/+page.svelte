@@ -24,21 +24,24 @@
         [0, 0, 0, 3],
     ];
 
-    let sizeOptions = [2, 3, 4, 5]
+    let sizeOptions = [2, 3, 4, 5];
     let modeOptions = [
         "linear",
         "inverse",
         "determinant"
-    ]
+    ];
+
+    let variables = [ 'z', 'y', 'x', 'w', 'v'];
 
     $: rows = matrix.length;
     $: columns = matrix[0]?.length;
     $: solutionsArray = matrix.map((value) => {
         return value[columns - 1];
-    })
+    });
 </script>
 
 <h1 class="underline"> Matrix Operations </h1>
+
 <div>
     <select>
         {#each sizeOptions as size}
@@ -57,11 +60,16 @@
     </select>
 </div>
 
-<div>
+<div class="flex flex-col">
     {#each matrix as row, i}
-        <div>
+        <div class="flex flex-row">
         {#each row as val, j}
-            <input type="number" bind:value={val} id={`${i}_${j}`} />
+            {#if j >= rows}
+                <span class="m-2 test-m" id={`var_${i}_${j}`}>=</span>
+            {:else}
+                <span class="m-2 test-m" id={`var_${i}_${j}`}>{variables[j]}:</span>
+            {/if}
+            <input class="border-solid border-black border-2 w-16" type="number" bind:value={val} id={`input_${i}_${j}`} />
         {/each}
         </div>
     {/each}
