@@ -17,18 +17,19 @@
     //     [0, 0, 0, 0, 0, 1],
     // ];
 
-    // let modes = [
-    //     "linear",
-    //     "inverse",
-    //     "determinant"
-    // ]
-
     // let mode = 0;
     let matrix = [ 
         [0, 0, 0, 1],
         [0, 0, 0, 2],
         [0, 0, 0, 3],
     ];
+
+    let sizeOptions = [2, 3, 4, 5]
+    let modeOptions = [
+        "linear",
+        "inverse",
+        "determinant"
+    ]
 
     $: rows = matrix.length;
     $: columns = matrix[0]?.length;
@@ -37,13 +38,43 @@
     })
 </script>
 
-<h1> Matrix Operations </h1>
-{#each matrix as row}
-    <div>
-    {#each row as val}
-        <input value={val}>
+<h1 class="underline"> Matrix Operations </h1>
+<div>
+    <select>
+        {#each sizeOptions as size}
+            <option value={size}>
+                {size}
+            </option>
+        {/each}
+    </select>
+    
+    <select>
+        {#each modeOptions as option}
+            <option value={option}>
+                {option}
+            </option>
+        {/each}
+    </select>
+</div>
+
+<div>
+    {#each matrix as row, i}
+        <div>
+        {#each row as val, j}
+            <input type="number" bind:value={val} id={`${i}_${j}`} />
+        {/each}
+        </div>
     {/each}
-    </div>
-{/each}
+</div>
+
+<div>
+    <button class="border-solid border-slate-500 border-2 p-1 rounded-md hover:bg-slate-200 shadow-[inset_0_0px_4px_rgba(0,0,0,0.6)]">
+        Calculate
+    </button>
+    
+    <button class="border-solid border-slate-500 border-2 p-1 rounded-md hover:bg-slate-200 shadow-[inset_0_0px_4px_rgba(0,0,0,0.6)]" on:click={() => {console.log(matrix)}}>
+        Pretty Print Internals
+    </button>
+</div>
 
 
